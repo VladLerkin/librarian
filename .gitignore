@@ -1,0 +1,12 @@
+logs
+target
+.sbtserver
+project/.sbtserver
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID/.nb-play.properties
+.nb-play.properties
+.history

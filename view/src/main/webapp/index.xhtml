@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>Библиотека</h:head>
+<h:body>
+    <h:form id="form">
+        <p:panel header="информация о книге">
+            <p:panelGrid columns="4">
+                <p:column>
+                    <p:inputText value="#{catalogBean.name}"/>
+                </p:column>
+                <p:column>
+                    <p:inputText value="#{catalogBean.author}"/>
+                </p:column>
+                <p:column>
+                    <p:inputText value="#{catalogBean.publishingYear}"/>
+                </p:column>
+                <p:column>
+                    <p:inputText value="#{catalogBean.quantityTotal}"/>
+                </p:column>
+
+                <p:column>
+                    Наименование
+                </p:column>
+                <p:column>
+                    Автор
+                </p:column>
+                <p:column>
+                    Год
+                </p:column>
+                <p:column>
+                    Общее количество
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Добавить книгу" action="#{catalogBean.createBook()}" update="catalog" />
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Поиск" action="#{catalogBean.setSearchBooks(true)}" update="catalog"/>
+                </p:column>
+                <p:column>
+                    <p:commandButton value="Показать все" action="#{catalogBean.setSearchBooks(false)}" update="catalog"/>
+                </p:column>
+
+            </p:panelGrid>
+
+        </p:panel>
+
+        <p:growl id="msgs" showDetail="true"/>
+
+        <p:dataTable id="catalog" var="book" value="#{catalogBean.books}" editable="true" style="margin-bottom:20px">
+            <f:facet name="header">
+                Каталог
+            </f:facet>
+
+            <p:ajax event="rowEdit" listener="#{catalogBean.onRowEdit}" update=":form:msgs" />
+            <p:ajax event="rowEditCancel" listener="#{catalogBean.onRowCancel}" update=":form:msgs" />
+
+            <p:column headerText="IBSN">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{book.id}" /></f:facet>
+                    <f:facet name="input"><p:inputText id="modelInput" value="#{book.id}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Название">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{book.name}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{book.name}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Автор">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{book.author}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{book.author}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Год">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{book.publishingYear}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{book.publishingYear}" style="width:100%" label="Year"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column>
+                <h:commandButton value="-" action="#{catalogBean.decrementQuantityBalance(book)}" update="catalog"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{book.quantityBalance}"/>
+            </p:column>
+            <p:column>
+                <h:commandButton value="+" action="#{catalogBean.incrementQuantityBalance(book)}" update="catalog"/>
+            </p:column>
+            <p:column>
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{book.quantityTotal}" /></f:facet>
+                    <f:facet name="input"><p:inputText value="#{book.quantityTotal}" style="width:100%" label="Year"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+
+            <p:column style="width:32px">
+                <p:rowEditor />
+            </p:column>
+        </p:dataTable>
+
+    </h:form >
+
+
+
+    
+</h:body>
+</html>
