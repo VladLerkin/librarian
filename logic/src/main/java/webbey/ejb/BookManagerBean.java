@@ -14,7 +14,7 @@ import java.util.List;
 @Stateless
 @LocalBean
 public class BookManagerBean {
-
+//JPA
     @PersistenceContext(unitName = "examplePU")
     private EntityManager entityManager;
 
